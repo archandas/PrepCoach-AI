@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: "Saira", sans-serif;
+  }
+
+  body {
+    font-family: "Saira", sans-serif;
+  }
+}

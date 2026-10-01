@@ -86,17 +86,28 @@ const resume = typeof interviewReport.resume === "string" ? interviewReport.resu
 const selfDescription = typeof interviewReport.selfDescription === "string" ? interviewReport.selfDescription : "";
 const jobDescription = typeof interviewReport.jobDescription === "string" ? interviewReport.jobDescription : "";
 
-const pdfBuffer = await generateResumePdf({
-  resume,
-  selfDescription,
-  jobDescription
-})
+try {
+  const pdfBuffer = await generateResumePdf({
+    resume,
+    selfDescription,
+    jobDescription
+  });
 
-res.set({
-  'Content-Type': 'application/pdf',
-  'Content-Disposition': `attachment; filename="resume_${interviewId}.pdf"`,
-})
-res.send(pdfBuffer)
+  res.set({
+    "Content-Type": "application/pdf",
+    "Content-Disposition": `attachment; filename="resume_${interviewId}.pdf"`,
+  });
+
+  res.send(pdfBuffer);
+
+} catch (error) {
+  console.error("RESUME PDF CONTROLLER ERROR:", error);
+
+  res.status(500).json({
+    message: "Failed to generate resume PDF"
+  });
+}
+
 }
 
 export default {generateInterviewReportController, getInterviewReportByIdController, getAllInterviewReportsController, generateResumePdfController}
